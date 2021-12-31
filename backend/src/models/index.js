@@ -1,7 +1,10 @@
-const { Sequelize, DataTypes } = require("sequelize");
+const { Sequelize } = require("sequelize");
+const Student = require("./student");
+const Major = require("./major");
 
 const env = process.env.NODE_ENV || "development";
 const config = require("../config/config")[env];
+const db = {};
 
 const sequelize = new Sequelize(
   config.database,
@@ -10,27 +13,18 @@ const sequelize = new Sequelize(
   { host: config.host, dialect: config.dialect }
 );
 
-const User = sequelize.define(
-  "User",
-  {
-    // Model attributes are defined here
-    firstName: {
-      type: DataTypes.STRING,
-      allowNull: false,
-    },
-    lastName: {
-      type: DataTypes.STRING,
-      // allowNull defaults to true
-    },
-  },
-  {
-    // Other model options go here
-  }
-);
+db.Student = Student;
+db.Major = Major;
 
-const excute = async () => {
-  await User.sync({ force: true });
+Student.init(sequelize);
+Major.init(sequelize);
+
+Student.associate(db);
+Major.associate(db);
+
+const DBinit = async () => {
+  await sequelize.sync();
   console.log("The table for the User model was just created");
 };
 
-excute();
+DBinit();
