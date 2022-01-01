@@ -4,7 +4,11 @@ class Student extends Model {
   static init(sequelize) {
     return super.init(
       {
-        // Model attributes are defined here
+        student_id: {
+          type: DataTypes.STRING,
+          allowNull: false,
+          primaryKey: true,
+        },
         password: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -21,6 +25,10 @@ class Student extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
+        student_number: {
+          type: DataTypes.INTEGER,
+          allowNull: false,
+        },
       },
       {
         sequelize,
@@ -29,7 +37,15 @@ class Student extends Model {
   }
 
   static associate(db) {
-    db.Student.belongsTo(db.Major);
+    db.Student.belongsTo(db.Major, {
+      foreignKey: "major_name",
+      targetKey: "major_name",
+    });
+
+    db.Student.belongsToMany(db.Subject, {
+      through: "student_subject",
+      foreignKey: "student_id",
+    });
   }
 }
 

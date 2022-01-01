@@ -10,11 +10,11 @@ class Major extends Model {
           allowNull: false,
           primaryKey: true,
         },
-        student_number: {
+        current_capacity: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        capacity: {
+        max_capacity: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -26,7 +26,14 @@ class Major extends Model {
   }
 
   static associate(db) {
-    db.Major.hasMany(db.Student);
+    db.Major.hasMany(db.Student, {
+      foreignKey: "major_name",
+      sourceKey: "major_name",
+    });
+    db.Major.belongsToMany(db.Subject, {
+      through: "subject_ban_major",
+      foreignKey: "major_name",
+    });
   }
 }
 
