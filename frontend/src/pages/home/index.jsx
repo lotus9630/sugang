@@ -1,22 +1,29 @@
-import React from 'react';
-import { Box } from '@mui/material';
+import * as React from 'react';
+import { Container } from '@mui/material';
+import BottomNavigation from '@mui/material/BottomNavigation';
+import BottomNavigationAction from '@mui/material/BottomNavigationAction';
+import MenuBookIcon from '@mui/icons-material/MenuBook';
+import HomeIcon from '@mui/icons-material/Home';
+import FoundationIcon from '@mui/icons-material/Foundation';
+import StarIcon from '@mui/icons-material/Star';
 
-const HomePage = () => {
+export default function SimpleBottomNavigation() {
+  const [value, setValue] = React.useState(0);
   return (
-    <div>
-      <Box
-        sx={{
-          width: 300,
-          height: 300,
-          backgroundColor: 'primary.dark',
-          '&:hover': {
-            backgroundColor: 'primary.main',
-            opacity: [0.9, 0.8, 0.7],
-          },
+    <Container maxWidth="md" sx={{ mt: 12 }}>
+      <BottomNavigation
+        showLabels
+        value={value}
+        onChange={(event, newValue) => {
+          setValue(newValue);
         }}
-      />
-    </div>
+        sx={{ justifyContent: 'space-between' }}
+      >
+        <BottomNavigationAction label="전체 과목" icon={<HomeIcon />} />
+        <BottomNavigationAction label="전공 과목" icon={<StarIcon />} />
+        <BottomNavigationAction label="교양 과목" icon={<MenuBookIcon />} />
+        <BottomNavigationAction label="기초 과목" icon={<FoundationIcon />} />
+      </BottomNavigation>
+    </Container>
   );
-};
-
-export default HomePage;
+}
