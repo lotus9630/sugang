@@ -6,11 +6,45 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HomeIcon from '@mui/icons-material/Home';
 import FoundationIcon from '@mui/icons-material/Foundation';
 import StarIcon from '@mui/icons-material/Star';
+import HomeSubjectList from 'layouts/HomeSubjectList';
 
-export default function SimpleBottomNavigation() {
+const subjectList = [
+  {
+    code: 0,
+    name: '과목 1',
+    type: 'major',
+    major: 'electronic',
+    currentStudent: 0,
+    maxStudent: 10,
+    minGrade: 1,
+    maxGrade: 4,
+  },
+  {
+    code: 1,
+    name: '과목 2',
+    type: 'major',
+    major: 'electronic',
+    currentStudent: 0,
+    maxStudent: 10,
+    minGrade: 1,
+    maxGrade: 4,
+  },
+  {
+    code: 3,
+    name: '과목 3',
+    type: 'major',
+    major: 'electronic',
+    currentStudent: 0,
+    maxStudent: 10,
+    minGrade: 1,
+    maxGrade: 4,
+  },
+];
+
+export default function Home() {
   const [value, setValue] = React.useState(0);
   return (
-    <Container maxWidth="md" sx={{ mt: 12 }}>
+    <Container maxWidth="lg" sx={{ mt: 12 }}>
       <BottomNavigation
         showLabels
         value={value}
@@ -24,6 +58,7 @@ export default function SimpleBottomNavigation() {
         <BottomNavigationAction label="교양 과목" icon={<MenuBookIcon />} />
         <BottomNavigationAction label="기초 과목" icon={<FoundationIcon />} />
       </BottomNavigation>
+      <HomeSubjectList subjectList={subjectList} />
     </Container>
   );
 }
