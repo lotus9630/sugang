@@ -8,7 +8,7 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 
-const HomeSubjectList = ({ subjectList }) => {
+const SubjectTable = ({ subjectList }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -47,4 +47,4 @@ const HomeSubjectList = ({ subjectList }) => {
   );
 };
 
-export default HomeSubjectList;
+export default SubjectTable;

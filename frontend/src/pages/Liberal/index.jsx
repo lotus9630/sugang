@@ -36,11 +36,11 @@ const subjectList = [
   },
 ];
 
-export default function HomePage() {
+export default function LiberalPage() {
   return (
     <Container maxWidth="lg" sx={{ mt: 12, position: 'relative' }}>
       <User />
-      <Navigation pageNumber={0} />
+      <Navigation pageNumber={2} />
       <SubjectTable subjectList={subjectList} />
     </Container>
   );
