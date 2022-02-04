@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useState } from 'react';
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -21,15 +21,18 @@ export default function SignupPage() {
     const data = new FormData(event.currentTarget);
     // eslint-disable-next-line no-console
     console.log({
+      name: data.get('name'),
       email: data.get('email'),
       password: data.get('password'),
+      passwordConfirm: data.get('password-confirm'),
+      grade,
     });
   };
 
-  const [age, setAge] = React.useState('');
+  const [grade, setGrade] = useState('');
 
-  const handleChange = (event) => {
-    setAge(event.target.value);
+  const gradeChange = (event) => {
+    setGrade(event.target.value);
   };
 
   const changePage = () => {
@@ -64,18 +67,19 @@ export default function SignupPage() {
               label="비밀번호 확인"
               type="password"
             />
-            <FormControl fullWidth>
-              <InputLabel id="demo-simple-select-label">Age</InputLabel>
+            <FormControl fullWidth sx={{ mt: 2, mb: 1 }}>
+              <InputLabel id="demo-simple-select-label">학년</InputLabel>
               <Select
                 labelId="demo-simple-select-label"
                 id="demo-simple-select"
-                value={age}
-                label="Age"
-                onChange={handleChange}
+                value={grade}
+                label="학년"
+                onChange={gradeChange}
               >
-                <MenuItem value={10}>Ten</MenuItem>
-                <MenuItem value={20}>Twenty</MenuItem>
-                <MenuItem value={30}>Thirty</MenuItem>
+                <MenuItem value={1}>1학년</MenuItem>
+                <MenuItem value={2}>2학년</MenuItem>
+                <MenuItem value={3}>3학년</MenuItem>
+                <MenuItem value={4}>4학년</MenuItem>
               </Select>
             </FormControl>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>
