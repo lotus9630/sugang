@@ -1,20 +1,30 @@
 const express = require("express");
 const path = require("path");
 const morgan = require("morgan");
+const passport = require("passport");
+const session = require("express-session");
+
+const { DBinit } = require("./models");
+// DBinit();
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");
+const authRouter = require("./routes/auth");
 
 const app = express();
 
 app.set("port", 4000);
 
 app.use(morgan("dev"));
-app.use(express.static(path.join(__dirname, "public")));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
+app.use(session({ secret: "cats", resave: true, saveUninitialized: false }));
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use("/", indexRouter);
+app.use("/auth", authRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터를 찾을 수 없습니다`);

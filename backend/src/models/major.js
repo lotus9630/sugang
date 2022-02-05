@@ -5,16 +5,16 @@ class Major extends Model {
     return super.init(
       {
         // Model attributes are defined here
-        major_name: {
+        majorName: {
           type: DataTypes.STRING,
           allowNull: false,
           primaryKey: true,
         },
-        current_capacity: {
+        currentCapacity: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        max_capacity: {
+        maxCapacity: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
@@ -27,12 +27,12 @@ class Major extends Model {
 
   static associate(db) {
     db.Major.hasMany(db.Student, {
-      foreignKey: "major_name",
-      sourceKey: "major_name",
+      foreignKey: "majorName",
+      sourceKey: "majorName",
     });
     db.Major.belongsToMany(db.Subject, {
       through: "subject_ban_major",
-      foreignKey: "major_name",
+      foreignKey: "majorName",
     });
   }
 }

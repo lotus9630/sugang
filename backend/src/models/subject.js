@@ -4,33 +4,33 @@ class Subject extends Model {
   static init(sequelize) {
     return super.init(
       {
-        subject_code: {
+        subjectCode: {
           type: DataTypes.INTEGER,
           allowNull: false,
           autoIncrement: true,
           primaryKey: true,
         },
-        subject_name: {
+        subjectName: {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        max_student: {
+        maxStudent: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        current_student: {
+        currentStudent: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        min_grade: {
+        minGrade: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        max_grade: {
+        maxGrade: {
           type: DataTypes.INTEGER,
           allowNull: false,
         },
-        subject_kind: {
+        subjectKind: {
           type: DataTypes.STRING,
           allowNull: false,
         },
@@ -44,11 +44,11 @@ class Subject extends Model {
   static associate(db) {
     db.Subject.belongsToMany(db.Student, {
       through: "student_subject",
-      foreignKey: "subject_code",
+      foreignKey: "subjectCode",
     });
     db.Subject.belongsToMany(db.Major, {
       through: "subject_ban_major",
-      foreignKey: "subject_code",
+      foreignKey: "subjectCode",
     });
   }
 }

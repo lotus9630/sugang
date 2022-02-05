@@ -4,11 +4,17 @@ class Student extends Model {
   static init(sequelize) {
     return super.init(
       {
-        student_id: {
-          type: DataTypes.STRING,
+        studentNumber: {
+          type: DataTypes.INTEGER,
+          autoIncrement: true,
           allowNull: false,
           primaryKey: true,
         },
+        email: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+
         password: {
           type: DataTypes.STRING,
           allowNull: false,
@@ -21,14 +27,6 @@ class Student extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
-        email: {
-          type: DataTypes.STRING,
-          allowNull: false,
-        },
-        student_number: {
-          type: DataTypes.INTEGER,
-          allowNull: false,
-        },
       },
       {
         sequelize,
@@ -38,13 +36,13 @@ class Student extends Model {
 
   static associate(db) {
     db.Student.belongsTo(db.Major, {
-      foreignKey: "major_name",
-      targetKey: "major_name",
+      foreignKey: "majorName",
+      targetKey: "majorName",
     });
 
     db.Student.belongsToMany(db.Subject, {
       through: "student_subject",
-      foreignKey: "student_id",
+      foreignKey: "studentNumber",
     });
   }
 }
