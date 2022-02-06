@@ -14,8 +14,11 @@ class Student extends Model {
           type: DataTypes.STRING,
           allowNull: false,
         },
-
         password: {
+          type: DataTypes.STRING,
+          allowNull: false,
+        },
+        salt: {
           type: DataTypes.STRING,
           allowNull: false,
         },

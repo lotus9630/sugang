@@ -3,7 +3,8 @@ const router = express.Router();
 
 /* GET home page. */
 router.get("/", (req, res, next) => {
-  res.send("hello, world");
+  console.log(req.user);
+  res.send("this is home page");
 });
 
 module.exports = router;

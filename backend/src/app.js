@@ -3,6 +3,8 @@ const path = require("path");
 const morgan = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
+const nunjucks = require("nunjucks");
+const passportConfig = require("./passport"); // 여기
 
 const { DBinit } = require("./models");
 // DBinit();
@@ -12,6 +14,13 @@ const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 
 const app = express();
+app.set("port", process.env.PORT || 3000);
+app.set("view engine", "html");
+
+nunjucks.configure("views", {
+  express: app,
+  watch: true,
+});
 
 app.set("port", 4000);
 
@@ -22,6 +31,7 @@ app.use(express.urlencoded({ extended: false }));
 app.use(session({ secret: "cats", resave: true, saveUninitialized: false }));
 app.use(passport.initialize());
 app.use(passport.session());
+passportConfig();
 
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
