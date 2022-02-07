@@ -34,12 +34,16 @@ router.post(
 );
 
 router.get("/login/success", (req, res, next) => {
-  console.log(req.user);
   res.json(req.user);
 });
 
 router.get("/login/failure", (req, res, next) => {
   res.status(500).json({ message: "로그인에 실패하였습니다" });
+});
+
+router.post("/logout", (req, res, next) => {
+  req.logout();
+  res.redirect("/");
 });
 
 module.exports = router;

@@ -20,7 +20,7 @@ class Subject extends Model {
         },
         currentStudent: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          defaultValue: 0,
         },
         minGrade: {
           type: DataTypes.INTEGER,

@@ -12,7 +12,7 @@ class Major extends Model {
         },
         currentCapacity: {
           type: DataTypes.INTEGER,
-          allowNull: false,
+          defaultValue: 0,
         },
         maxCapacity: {
           type: DataTypes.INTEGER,

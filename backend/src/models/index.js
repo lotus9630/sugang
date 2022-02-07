@@ -30,31 +30,26 @@ const DBinit = async () => {
   await sequelize.sync({ force: true });
   await Major.create({
     majorName: "기계공학과",
-    currentCapacity: 0,
     maxCapacity: 30,
   });
 
   await Major.create({
     majorName: "화학공학과",
-    currentCapacity: 0,
     maxCapacity: 30,
   });
 
   await Major.create({
     majorName: "생명공학과",
-    currentCapacity: 0,
     maxCapacity: 30,
   });
 
   await Major.create({
     majorName: "컴퓨터공학과",
-    currentCapacity: 0,
     maxCapacity: 30,
   });
 
   await Major.create({
     majorName: "전자공학과",
-    currentCapacity: 0,
     maxCapacity: 30,
   });
 
