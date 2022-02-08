@@ -16,11 +16,11 @@ router.post("/signup", async (req, res, next) => {
       { currentCapacity: majorInstance.dataValues.currentCapacity + 1 },
       { where: { majorName: body.majorName } }
     );
+    res.status(201).end();
   } catch (error) {
-    res.status(500).end();
+    console.error(error);
+    next(error);
   }
-
-  res.status(201).end();
 });
 
 router.post(

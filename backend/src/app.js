@@ -13,6 +13,8 @@ require("dotenv").config();
 const indexRouter = require("./routes/index");
 const authRouter = require("./routes/auth");
 const adminRouter = require("./routes/admin");
+const subjectRouter = require("./routes/subject");
+const studentRouter = require("./routes/student");
 
 const app = express();
 app.set("port", process.env.PORT || 3000);
@@ -37,6 +39,8 @@ passportConfig();
 app.use("/", indexRouter);
 app.use("/auth", authRouter);
 app.use("/admin", adminRouter);
+app.use("/subject", subjectRouter);
+app.use("/student", studentRouter);
 
 app.use((req, res, next) => {
   const error = new Error(`${req.method} ${req.url} 라우터를 찾을 수 없습니다`);
