@@ -4,6 +4,7 @@ const morgan = require("morgan");
 const passport = require("passport");
 const session = require("express-session");
 const nunjucks = require("nunjucks");
+const cors = require("cors");
 const passportConfig = require("./passport"); // 여기
 
 const { DBinit } = require("./models");
@@ -28,7 +29,7 @@ nunjucks.configure("views", {
 app.set("port", 4000);
 
 app.use(morgan("dev"));
-
+app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(session({ secret: "cats", resave: true, saveUninitialized: false }));

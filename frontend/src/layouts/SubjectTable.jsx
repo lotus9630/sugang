@@ -31,9 +31,9 @@ const SubjectTable = ({ subjectList }) => {
               <TableCell>
                 <Button variant="contained">신청</Button>
               </TableCell>
-              <TableCell align="right">{subject.code}</TableCell>
-              <TableCell align="right">{subject.name}</TableCell>
-              <TableCell align="right">{subject.type}</TableCell>
+              <TableCell align="right">{subject.subjectCode}</TableCell>
+              <TableCell align="right">{subject.subjectName}</TableCell>
+              <TableCell align="right">{subject.subjectKind}</TableCell>
               <TableCell align="right">{subject.major}</TableCell>
               <TableCell align="right">{subject.maxStudent}</TableCell>
               <TableCell align="right">{subject.currentStudent}</TableCell>
