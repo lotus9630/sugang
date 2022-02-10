@@ -7,24 +7,28 @@ import { getAllSubject } from 'api/subject';
 
 export default function HomePage() {
   const [subjectList, setSubjectList] = useState([]);
-  const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
 
   useEffect(() => {
     const callAPI = async () => {
-      // setLoading(true);
+      setLoading(true);
       const { data, error } = await getAllSubject();
-      // if (error) setError(true);
-      // setLoading(false);
-      // setSubjectList(data);
+      if (error) setIsError(true);
+      setSubjectList(data);
+      setLoading(false);
     };
-    // callAPI();
-  }, [subjectList, error, loading]);
+    callAPI();
+  }, []);
   return (
     <Container maxWidth="lg" sx={{ mt: 12, position: 'relative' }}>
       <User />
       <Navigation pageNumber={0} />
-      <SubjectTable subjectList={subjectList} />
+      {isError ? (
+        <h1>데이터 로딩중 에러가 발생하였습니다</h1>
+      ) : (
+        <SubjectTable subjectList={subjectList} loading={loading} />
+      )}
     </Container>
   );
 }

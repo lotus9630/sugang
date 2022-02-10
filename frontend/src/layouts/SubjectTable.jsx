@@ -7,8 +7,8 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
-
-const SubjectTable = ({ subjectList }) => {
+import { LoadingButton } from '@mui/lab';
+const SubjectTable = ({ subjectList, loading }) => {
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -27,18 +27,18 @@ const SubjectTable = ({ subjectList }) => {
         </TableHead>
         <TableBody>
           {subjectList.map((subject) => (
-            <TableRow key={subject.code} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+            <TableRow key={subject.subjectCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell>
                 <Button variant="contained">신청</Button>
               </TableCell>
-              <TableCell align="right">{subject.subjectCode}</TableCell>
-              <TableCell align="right">{subject.subjectName}</TableCell>
-              <TableCell align="right">{subject.subjectKind}</TableCell>
-              <TableCell align="right">{subject.major}</TableCell>
-              <TableCell align="right">{subject.maxStudent}</TableCell>
-              <TableCell align="right">{subject.currentStudent}</TableCell>
-              <TableCell align="right">{subject.minGrade}</TableCell>
-              <TableCell align="right">{subject.maxGrade}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectCode}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectName}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectKind}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.majorName}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.maxStudent}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.currentStudent}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.minGrade}</TableCell>
+              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.maxGrade}</TableCell>
             </TableRow>
           ))}
         </TableBody>

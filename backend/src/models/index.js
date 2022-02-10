@@ -53,6 +53,31 @@ const DBinit = async () => {
     maxCapacity: 30,
   });
 
+  await Subject.create({
+    subjectName: "수학1",
+    maxStudent: 40,
+    minGrade: 1,
+    maxGrade: 4,
+    subjectKind: "기초",
+  });
+
+  await Subject.create({
+    subjectName: "글쓰기",
+    maxStudent: 40,
+    minGrade: 1,
+    maxGrade: 4,
+    subjectKind: "교양",
+  });
+
+  await Subject.create({
+    subjectName: "유체역학",
+    maxStudent: 40,
+    minGrade: 1,
+    maxGrade: 4,
+    subjectKind: "전공",
+    majorName: "기계공학과",
+  });
+
   console.log("The table for the User model was just created");
 };
 

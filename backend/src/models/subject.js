@@ -50,6 +50,10 @@ class Subject extends Model {
       through: "subject_ban_major",
       foreignKey: "subjectCode",
     });
+    db.Subject.belongsTo(db.Major, {
+      foreignKey: "majorName",
+      allowNull: true,
+    });
   }
 }
 

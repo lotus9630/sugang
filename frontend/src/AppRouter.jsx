@@ -6,8 +6,8 @@ import ErrorPage from 'pages/Error';
 import MajorPage from 'pages/Major';
 import LiberalPage from 'pages/Liberal';
 import BasePage from 'pages/Base';
-import Users from 'components/Users';
-import { UsersProvider } from 'context/UsersContext';
+// import Users from 'components/Users';
+// import { UsersProvider } from 'context/UsersContext';
 
 function AppRouter() {
   return (

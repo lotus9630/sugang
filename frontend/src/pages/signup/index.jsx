@@ -16,6 +16,8 @@ const theme = createTheme();
 
 export default function SignupPage() {
   let navigate = useNavigate();
+  const [grade, setGrade] = useState('');
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -28,8 +30,6 @@ export default function SignupPage() {
       grade,
     });
   };
-
-  const [grade, setGrade] = useState('');
 
   const gradeChange = (event) => {
     setGrade(event.target.value);
@@ -80,6 +80,22 @@ export default function SignupPage() {
                 <MenuItem value={2}>2학년</MenuItem>
                 <MenuItem value={3}>3학년</MenuItem>
                 <MenuItem value={4}>4학년</MenuItem>
+              </Select>
+            </FormControl>
+            <FormControl fullWidth sx={{ mt: 2, mb: 1 }}>
+              <InputLabel id="demo-simple-select-label">학과</InputLabel>
+              <Select
+                labelId="demo-simple-select-label"
+                id="demo-simple-select"
+                value={grade}
+                label="학과"
+                onChange={gradeChange}
+              >
+                <MenuItem value={'기계공학과'}>기계공학과</MenuItem>
+                <MenuItem value={'생명공학과'}>생명공학과</MenuItem>
+                <MenuItem value={'전자공학과'}>전자공학과</MenuItem>
+                <MenuItem value={'컴퓨터공학과'}>컴퓨터공학과</MenuItem>
+                <MenuItem value={'화학공학과'}>화학공학과</MenuItem>
               </Select>
             </FormControl>
             <Button type="submit" fullWidth variant="contained" sx={{ mt: 3, mb: 2 }}>

@@ -2,11 +2,11 @@ const express = require("express");
 const router = express.Router();
 const { Subject, Student } = require("../models");
 
-router.use((req, res, next) => {
-  if (req.user.name !== "admin")
-    res.status(500).json({ message: "관리자 계정이 아닙니다" });
-  next();
-});
+// router.use((req, res, next) => {
+//   if (req.user.name !== "admin")
+//     res.status(500).json({ message: "관리자 계정이 아닙니다" });
+//   next();
+// });
 
 router.post("/subject", async (req, res, next) => {
   const body = req.body;

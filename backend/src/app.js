@@ -8,7 +8,7 @@ const cors = require("cors");
 const passportConfig = require("./passport"); // 여기
 
 const { DBinit } = require("./models");
-// DBinit();
+DBinit();
 require("dotenv").config();
 
 const indexRouter = require("./routes/index");

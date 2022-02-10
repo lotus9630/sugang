@@ -34,6 +34,11 @@ class Major extends Model {
       through: "subject_ban_major",
       foreignKey: "majorName",
     });
+    db.Major.hasMany(db.Subject, {
+      foreignKey: "majorName",
+      allowNull: true,
+      onDelete: "cascade",
+    });
   }
 }
 

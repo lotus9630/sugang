@@ -1,47 +1,34 @@
+import { useEffect, useState } from 'react';
 import { Container } from '@mui/material';
 import SubjectTable from 'layouts/SubjectTable';
 import Navigation from 'layouts/Navigation';
 import User from 'layouts/User';
-
-const subjectList = [
-  {
-    code: 0,
-    name: '과목 1',
-    type: '전공',
-    major: 'electronic',
-    currentStudent: 0,
-    maxStudent: 10,
-    minGrade: 1,
-    maxGrade: 4,
-  },
-  {
-    code: 1,
-    name: '과목 2',
-    type: '전공',
-    major: 'electronic',
-    currentStudent: 0,
-    maxStudent: 10,
-    minGrade: 1,
-    maxGrade: 4,
-  },
-  {
-    code: 3,
-    name: '과목 3',
-    type: '전공',
-    major: 'electronic',
-    currentStudent: 0,
-    maxStudent: 10,
-    minGrade: 1,
-    maxGrade: 4,
-  },
-];
+import { getMajorSubject } from 'api/subject';
 
 export default function MajorPage() {
+  const [subjectList, setSubjectList] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [isError, setIsError] = useState(false);
+
+  useEffect(() => {
+    const callAPI = async () => {
+      setLoading(true);
+      const { data, error } = await getMajorSubject();
+      if (error) setIsError(true);
+      setSubjectList(data);
+      setLoading(false);
+    };
+    callAPI();
+  }, []);
   return (
     <Container maxWidth="lg" sx={{ mt: 12, position: 'relative' }}>
       <User />
       <Navigation pageNumber={1} />
-      <SubjectTable subjectList={subjectList} />
+      {isError ? (
+        <h1>데이터 로딩중 에러가 발생하였습니다</h1>
+      ) : (
+        <SubjectTable subjectList={subjectList} loading={loading} />
+      )}
     </Container>
   );
 }
