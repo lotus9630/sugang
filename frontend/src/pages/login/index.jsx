@@ -8,19 +8,27 @@ import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import HomeIcon from '@mui/icons-material/Home';
 import { useNavigate } from 'react-router-dom';
+import { login } from 'api/auth';
+import { useUserDispatch } from 'context/UserContext';
 
 const theme = createTheme();
 
 export default function LoginPage() {
   let navigate = useNavigate();
-  const handleSubmit = (event) => {
+  const dispatch = useUserDispatch();
+
+  const handleSubmit = async (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    // eslint-disable-next-line no-console
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+
+    const user = await login(data.get('email'), data.get('password'));
+    if (user) {
+      dispatch({ type: 'LOGIN', user });
+      navigate('/');
+    } else {
+      alert('아이디 또는 비밀번호가 틀렸습니다');
+      return false;
+    }
   };
 
   const changePage = () => {

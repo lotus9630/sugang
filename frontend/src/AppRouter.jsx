@@ -6,14 +6,18 @@ import ErrorPage from 'pages/Error';
 import MajorPage from 'pages/Major';
 import LiberalPage from 'pages/Liberal';
 import BasePage from 'pages/Base';
-// import Users from 'components/Users';
-// import { UsersProvider } from 'context/UsersContext';
+import { getUser } from 'api/student';
+import { useUserDispatch } from 'context/UserContext';
 
 function AppRouter() {
+  const dispatch = useUserDispatch();
+  const callAPI = async () => {
+    const { data } = await getUser();
+    if (data) dispatch({ type: 'LOGIN', user: data });
+  };
+
+  callAPI();
   return (
-    // <UsersProvider>
-    //   <Users />
-    // </UsersProvider>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<HomePage />} />

@@ -8,7 +8,18 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
+import { registerSubject } from 'api/student';
+
 const SubjectTable = ({ subjectList, loading }) => {
+  const handleClick = async (e) => {
+    const subjectCode = e.target.name;
+    if (window.confirm('해당 과목을 신청하시겠습니까?')) {
+      const { error } = await registerSubject(subjectCode);
+      if (error) alert('에러가 발생하였습니다');
+      else alert('신청이 완료되었습니다');
+    }
+  };
+
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -29,7 +40,9 @@ const SubjectTable = ({ subjectList, loading }) => {
           {subjectList.map((subject) => (
             <TableRow key={subject.subjectCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell>
-                <Button variant="contained">신청</Button>
+                <Button variant="contained" onClick={handleClick} name={subject.subjectCode}>
+                  신청
+                </Button>
               </TableCell>
               <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectCode}</TableCell>
               <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectName}</TableCell>

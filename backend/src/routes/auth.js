@@ -46,4 +46,15 @@ router.post("/logout", (req, res, next) => {
   res.redirect("/");
 });
 
+router.post("/email/overlap", async (req, res, next) => {
+  const email = req.body.email;
+  const studentEmail = await Student.findOne({
+    raw: true,
+    where: { email },
+    attributes: ["email"],
+  });
+  if (studentEmail) res.status(401).end();
+  else res.end();
+});
+
 module.exports = router;

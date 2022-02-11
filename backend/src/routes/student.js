@@ -1,10 +1,16 @@
 const express = require("express");
 const router = express.Router();
-const { Subject, Student } = require("../models");
+const { Student } = require("../models");
 
 router.post("/subject", async (req, res, next) => {
+  console.log(req.user);
+  if (!req.user) {
+    res.status(401).json({ message: "로그인되어 있지 않습니다" });
+    return;
+  }
   const studentNumber = req.user.studentNumber;
   const subjectCode = req.body.subjectCode;
+
   try {
     const student = await Student.findOne({
       where: { studentNumber: studentNumber },
@@ -38,6 +44,11 @@ router.delete("/subject", async (req, res, next) => {
     console.error(error);
     next(error);
   }
+});
+
+router.get("/current", async (req, res, next) => {
+  console.log(req.user);
+  res.json(req.user);
 });
 
 module.exports = router;
