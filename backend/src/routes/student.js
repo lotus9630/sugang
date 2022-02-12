@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
-const { Student } = require("../models");
+const { Student, Subject } = require("../models");
 
 router.post("/subject", async (req, res, next) => {
-  console.log(req.user);
   if (!req.user) {
     res.status(401).json({ message: "로그인되어 있지 않습니다" });
     return;
@@ -14,12 +13,15 @@ router.post("/subject", async (req, res, next) => {
   try {
     const student = await Student.findOne({
       where: { studentNumber: studentNumber },
+      include: Subject,
+      raw: true,
     });
-    if (student) {
+    console.log(student["Subjects.student_subject.studentNumber"] === true);
+    if (!student["Subjects.student_subject.studentNumber"]) {
       await student.addSubject(subjectCode);
       res.end();
     } else {
-      res.status(404).send("학생 정보가 잘못되었습니다");
+      res.status(201).json({ error: { message: "이미 등록되어있습니다" } });
     }
   } catch (error) {
     console.error(error);
@@ -49,6 +51,15 @@ router.delete("/subject", async (req, res, next) => {
 router.get("/current", async (req, res, next) => {
   console.log(req.user);
   res.json(req.user);
+});
+
+router.get("/subject", async (req, res, next) => {
+  try {
+    Student;
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
 });
 
 module.exports = router;

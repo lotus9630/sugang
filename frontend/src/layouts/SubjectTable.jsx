@@ -15,7 +15,7 @@ const SubjectTable = ({ subjectList, loading }) => {
     const subjectCode = e.target.name;
     if (window.confirm('해당 과목을 신청하시겠습니까?')) {
       const { error } = await registerSubject(subjectCode);
-      if (error) alert('에러가 발생하였습니다');
+      if (error) alert(error.message);
       else alert('신청이 완료되었습니다');
     }
   };
