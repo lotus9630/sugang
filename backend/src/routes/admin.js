@@ -25,14 +25,14 @@ router.get("/all/user", async (req, res, next) => {
       attributes: ["studentNumber", "email", "grade", "name", "majorName"],
       raw: true,
     });
-    res.json(studentList);
+    res.json(studentList.filter((student) => student.name !== "admin"));
   } catch (error) {
     console.error(error);
     next(error);
   }
 });
 
-router.delete("/user/:studentNumber", async (req, res, next) => {
+router.delete("/student/:studentNumber", async (req, res, next) => {
   const studentNumber = req.params.studentNumber;
   try {
     await Student.destroy({ where: { studentNumber: studentNumber } });

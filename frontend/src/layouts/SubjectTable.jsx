@@ -1,16 +1,10 @@
 import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import { Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 import { registerSubject, deleteSubject } from 'api/student';
 
-const SubjectTable = ({ subjectList, loading, myPage }) => {
+const SubjectTable = ({ subjectList, loading, myPage, showSubjectList }) => {
   const clickRegister = async (e) => {
     const subjectCode = e.target.name;
     if (window.confirm('해당 과목을 신청하시겠습니까?')) {
@@ -25,10 +19,12 @@ const SubjectTable = ({ subjectList, loading, myPage }) => {
     if (window.confirm('해당 과목을 신청하시겠습니까?')) {
       const { error } = await deleteSubject(subjectCode);
       if (error) alert(error.message);
-      else alert('수강신청 취소가 완료되었습니다');
+      else {
+        alert('수강신청 취소가 완료되었습니다');
+        await showSubjectList();
+      }
     }
   };
-
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -45,31 +41,35 @@ const SubjectTable = ({ subjectList, loading, myPage }) => {
             <TableCell align="right">최대 학년</TableCell>
           </TableRow>
         </TableHead>
-        <TableBody>
-          {subjectList.map((subject) => (
-            <TableRow key={subject.subjectCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
-              <TableCell>
-                {myPage ? (
-                  <Button variant="contained" color="error" onClick={clickDelete} name={subject.subjectCode}>
-                    취소
-                  </Button>
-                ) : (
-                  <Button variant="contained" onClick={clickRegister} name={subject.subjectCode}>
-                    신청
-                  </Button>
-                )}
-              </TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectCode}</TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectName}</TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectKind}</TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.majorName}</TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.maxStudent}</TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.currentStudent}</TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.minGrade}</TableCell>
-              <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.maxGrade}</TableCell>
-            </TableRow>
-          ))}
-        </TableBody>
+        {Array.isArray(subjectList) && subjectList.length !== 0 && subjectList[0].subjectCode && (
+          <TableBody>
+            {subjectList.map((subject) => (
+              <TableRow key={subject.subjectCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
+                <TableCell>
+                  {myPage ? (
+                    <Button variant="contained" color="error" onClick={clickDelete} name={subject.subjectCode}>
+                      취소
+                    </Button>
+                  ) : (
+                    <Button variant="contained" onClick={clickRegister} name={subject.subjectCode}>
+                      신청
+                    </Button>
+                  )}
+                </TableCell>
+                <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectCode}</TableCell>
+                <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectName}</TableCell>
+                <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectKind}</TableCell>
+                <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.majorName}</TableCell>
+                <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.maxStudent}</TableCell>
+                <TableCell align="right">
+                  {loading ? <LoadingButton loading={true} /> : subject.currentStudent}
+                </TableCell>
+                <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.minGrade}</TableCell>
+                <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.maxGrade}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        )}
       </Table>
     </TableContainer>
   );

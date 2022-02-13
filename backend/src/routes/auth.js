@@ -6,6 +6,8 @@ const { createHashedPassword } = require("../utils/crypto");
 
 router.post("/signup", async (req, res, next) => {
   const body = req.body;
+  if (body.name === "admin")
+    res.status(401).end("관리자로 회원가입할 수 없습니다");
   const { password, salt } = await createHashedPassword(body.password);
   try {
     await Student.create({ ...body, password, salt });

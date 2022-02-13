@@ -17,10 +17,18 @@ const User = () => {
     <Box sx={{ display: 'flex', position: 'absolute', right: 20, top: -50 }}>
       {state.studentNumber ? (
         <>
-          <Box sx={{ mr: 3 }}>학생번호: {state.studentNumber}</Box>
-          <Box sx={{ mr: 3 }}>{state.email}</Box>
-          <Box sx={{ mr: 3 }}>{state.name}</Box>
-          <Box sx={{ mr: 3 }}>{state.majorName}</Box>
+          {state.name === 'admin' ? (
+            <Box sx={{ mr: 3 }}>관리자 계정</Box>
+          ) : (
+            <>
+              {' '}
+              <Box sx={{ mr: 3 }}>학생번호: {state.studentNumber}</Box>
+              <Box sx={{ mr: 3 }}>{state.email}</Box>
+              <Box sx={{ mr: 3 }}>{state.name}</Box>
+              <Box sx={{ mr: 3 }}>{state.majorName}</Box>
+            </>
+          )}
+
           <Button variant="contained" onClick={changePage} name="logout">
             로그아웃
           </Button>

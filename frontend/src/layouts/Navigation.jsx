@@ -7,9 +7,11 @@ import FoundationIcon from '@mui/icons-material/Foundation';
 import StarIcon from '@mui/icons-material/Star';
 import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
+import { useUserState } from 'context/UserContext';
 
 const Navigation = ({ pageNumber }) => {
   let navigate = useNavigate();
+  const state = useUserState();
   const changePage = (pageNumber) => {
     if (pageNumber === 0) navigate('/');
     else if (pageNumber === 1) navigate('/major');
@@ -32,7 +34,7 @@ const Navigation = ({ pageNumber }) => {
       <BottomNavigationAction label="전공 과목" icon={<StarIcon />} />
       <BottomNavigationAction label="교양 과목" icon={<MenuBookIcon />} />
       <BottomNavigationAction label="기초 과목" icon={<FoundationIcon />} />
-      <BottomNavigationAction label="개인 정보" icon={<PersonIcon />} />
+      <BottomNavigationAction label={state.name === 'admin' ? '학생 정보' : '개인 정보'} icon={<PersonIcon />} />
     </BottomNavigation>
   );
 };

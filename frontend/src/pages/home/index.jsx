@@ -10,14 +10,14 @@ export default function HomePage() {
   const [loading, setLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
+  const callAPI = async () => {
+    setLoading(true);
+    const { data, error } = await getAllSubject();
+    if (error) setIsError(true);
+    setSubjectList(data);
+    setLoading(false);
+  };
   useEffect(() => {
-    const callAPI = async () => {
-      setLoading(true);
-      const { data, error } = await getAllSubject();
-      if (error) setIsError(true);
-      setSubjectList(data);
-      setLoading(false);
-    };
     callAPI();
   }, []);
   return (

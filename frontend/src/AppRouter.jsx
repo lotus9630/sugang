@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { HomePage, LoginPage, SignupPage, ErrorPage, MajorPage, LiberalPage, BasePage, MyPage } from 'pages';
 import { getUser } from 'api/student';
@@ -10,7 +11,9 @@ function AppRouter() {
     if (data) dispatch({ type: 'LOGIN', user: data });
   };
 
-  callAPI();
+  useEffect(() => {
+    callAPI();
+  });
   return (
     <BrowserRouter>
       <Routes>
