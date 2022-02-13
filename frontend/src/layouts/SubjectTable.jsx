@@ -8,15 +8,24 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
-import { registerSubject } from 'api/student';
+import { registerSubject, deleteSubject } from 'api/student';
 
-const SubjectTable = ({ subjectList, loading }) => {
-  const handleClick = async (e) => {
+const SubjectTable = ({ subjectList, loading, myPage }) => {
+  const clickRegister = async (e) => {
     const subjectCode = e.target.name;
     if (window.confirm('해당 과목을 신청하시겠습니까?')) {
       const { error } = await registerSubject(subjectCode);
       if (error) alert(error.message);
       else alert('신청이 완료되었습니다');
+    }
+  };
+
+  const clickDelete = async (e) => {
+    const subjectCode = e.target.name;
+    if (window.confirm('해당 과목을 신청하시겠습니까?')) {
+      const { error } = await deleteSubject(subjectCode);
+      if (error) alert(error.message);
+      else alert('수강신청 취소가 완료되었습니다');
     }
   };
 
@@ -40,9 +49,15 @@ const SubjectTable = ({ subjectList, loading }) => {
           {subjectList.map((subject) => (
             <TableRow key={subject.subjectCode} sx={{ '&:last-child td, &:last-child th': { border: 0 } }}>
               <TableCell>
-                <Button variant="contained" onClick={handleClick} name={subject.subjectCode}>
-                  신청
-                </Button>
+                {myPage ? (
+                  <Button variant="contained" color="error" onClick={clickDelete} name={subject.subjectCode}>
+                    취소
+                  </Button>
+                ) : (
+                  <Button variant="contained" onClick={clickRegister} name={subject.subjectCode}>
+                    신청
+                  </Button>
+                )}
               </TableCell>
               <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectCode}</TableCell>
               <TableCell align="right">{loading ? <LoadingButton loading={true} /> : subject.subjectName}</TableCell>

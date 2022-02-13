@@ -2,22 +2,25 @@ const express = require("express");
 const router = express.Router();
 const { Student, Subject } = require("../models");
 
+// router.use((req, res, next) => {
+//   if (!req.user) res.status(500).json({ message: "로그인되어 있지 않습니다" });
+//   next();
+// });
+
 router.post("/subject", async (req, res, next) => {
-  if (!req.user) {
-    res.status(401).json({ message: "로그인되어 있지 않습니다" });
-    return;
-  }
   const studentNumber = req.user.studentNumber;
   const subjectCode = req.body.subjectCode;
 
   try {
-    const student = await Student.findOne({
+    const isExist = await Student.findOne({
       where: { studentNumber: studentNumber },
-      include: Subject,
+      include: [{ model: Subject, where: { subjectCode } }],
       raw: true,
     });
-    console.log(student["Subjects.student_subject.studentNumber"] === true);
-    if (!student["Subjects.student_subject.studentNumber"]) {
+    if (!isExist) {
+      const student = await Student.findOne({
+        where: { studentNumber: studentNumber },
+      });
       await student.addSubject(subjectCode);
       res.end();
     } else {
@@ -29,13 +32,15 @@ router.post("/subject", async (req, res, next) => {
   }
 });
 
-router.delete("/subject", async (req, res, next) => {
+router.delete("/subject/:subjectCode", async (req, res, next) => {
   const studentNumber = req.user.studentNumber;
-  const subjectCode = req.body.subjectCode;
+  const subjectCode = req.params.subjectCode;
+
   try {
     const student = await Student.findOne({
-      where: { studentNumber: studentNumber },
+      where: { studentNumber },
     });
+
     if (student) {
       await student.removeSubject(subjectCode);
       res.end();
@@ -53,9 +58,27 @@ router.get("/current", async (req, res, next) => {
   res.json(req.user);
 });
 
-router.get("/subject", async (req, res, next) => {
+router.get("/subjectall", async (req, res, next) => {
+  const studentNumber = req.user.studentNumber;
   try {
-    Student;
+    const subjectList = await Student.findAll({
+      where: { studentNumber },
+      include: [{ model: Subject }],
+      raw: true,
+    });
+    const filtered = subjectList.map((subject) => {
+      return {
+        subjectCode: subject["Subjects.subjectCode"],
+        subjectName: subject["Subjects.subjectName"],
+        maxStudent: subject["Subjects.maxStudent"],
+        minGrade: subject["Subjects.minGrade"],
+        maxGrade: subject["Subjects.maxGrade"],
+        subjectKind: subject["Subjects.subjectKind"],
+        majorName: subject["Subjects.majorName"],
+        currentStudent: subject["Subjects.currentStudent"],
+      };
+    });
+    res.json(filtered);
   } catch (error) {
     console.error(error);
     next(error);

@@ -5,6 +5,7 @@ import MenuBookIcon from '@mui/icons-material/MenuBook';
 import HomeIcon from '@mui/icons-material/Home';
 import FoundationIcon from '@mui/icons-material/Foundation';
 import StarIcon from '@mui/icons-material/Star';
+import PersonIcon from '@mui/icons-material/Person';
 import { useNavigate } from 'react-router-dom';
 
 const Navigation = ({ pageNumber }) => {
@@ -14,6 +15,7 @@ const Navigation = ({ pageNumber }) => {
     else if (pageNumber === 1) navigate('/major');
     else if (pageNumber === 2) navigate('/liberal');
     else if (pageNumber === 3) navigate('/base');
+    else if (pageNumber === 4) navigate('/my');
   };
   const [value, setValue] = useState(pageNumber);
   return (
@@ -30,6 +32,7 @@ const Navigation = ({ pageNumber }) => {
       <BottomNavigationAction label="전공 과목" icon={<StarIcon />} />
       <BottomNavigationAction label="교양 과목" icon={<MenuBookIcon />} />
       <BottomNavigationAction label="기초 과목" icon={<FoundationIcon />} />
+      <BottomNavigationAction label="개인 정보" icon={<PersonIcon />} />
     </BottomNavigation>
   );
 };
